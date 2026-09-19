@@ -20,4 +20,3 @@ Mở trình duyệt tại http://127.0.0.1:8000/
 | Thêm công việc | http://127.0.0.1:8000/create/ |
 | Lọc chưa hoàn thành | http://127.0.0.1:8000/?status=pending |
 | Lọc đã hoàn thành | http://127.0.0.1:8000/?status=done |
-| Django Admin | http://127.0.0.1:8000/admin/ |

@@ -7,6 +7,7 @@ Mở trình duyệt tại http://127.0.0.1:8000/
 | Quản trị (Admin) | `admin` | `admin123` |
 | Người dùng 1 | `nguyenvana` | `Test@12345` |
 | Người dùng 2 | `tranthib` | `Test@12345` |
+| Người dùng mới đăng ký | `bi` | `bi@123456789` |
 
 ## Các trang
 

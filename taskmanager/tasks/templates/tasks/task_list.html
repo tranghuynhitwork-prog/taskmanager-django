@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Danh sách công việc{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Công việc của tôi</h2>
+    {% if user.is_authenticated %}
+        <a href="{% url 'task_create' %}" class="btn btn-success">+ Thêm công việc</a>
+    {% endif %}
+</div>
+
+<div class="btn-group mb-3" role="group">
+    <a href="{% url 'task_list' %}" class="btn btn-outline-primary {% if not status %}active{% endif %}">Tất cả</a>
+    <a href="?status=pending" class="btn btn-outline-primary {% if status == 'pending' %}active{% endif %}">Chưa hoàn thành</a>
+    <a href="?status=done" class="btn btn-outline-primary {% if status == 'done' %}active{% endif %}">Đã hoàn thành</a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Tiêu đề</th>
+                    <th>Hạn hoàn thành</th>
+                    <th>Ưu tiên</th>
+                    <th>Trạng thái</th>
+                    <th class="text-end">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for task in tasks %}
+                <tr>
+                    <td>
+                        <strong>{{ task.title }}</strong>
+                        {% if task.description %}<div class="text-muted small">{{ task.description|truncatechars:80 }}</div>{% endif %}
+                    </td>
+                    <td>{{ task.due_date|date:"d/m/Y" }}</td>
+                    <td>
+                        {% if task.priority == 'Cao' %}<span class="badge bg-danger">Cao</span>
+                        {% elif task.priority == 'Trung bình' %}<span class="badge bg-warning text-dark">Trung bình</span>
+                        {% else %}<span class="badge bg-secondary">Thấp</span>{% endif %}
+                    </td>
+                    <td>
+                        {% if task.is_completed %}<span class="badge bg-success">Đã hoàn thành</span>
+                        {% else %}<span class="badge bg-info text-dark">Chưa hoàn thành</span>{% endif %}
+                    </td>
+                    <td class="text-end">
+                        {% if task.owner == user %}
+                            <a href="{% url 'task_update' task.pk %}" class="btn btn-sm btn-outline-primary">Sửa</a>
+                            <a href="{% url 'task_delete' task.pk %}" class="btn btn-sm btn-outline-danger">Xoá</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center text-muted py-4">Chưa có công việc nào.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
